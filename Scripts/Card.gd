@@ -12,7 +12,6 @@ var move_to_position
 var move_from_position
 var moving_type = ""
 var on_start_game = false
-var is_human_card = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -26,18 +25,11 @@ func get_height():
 
     
 func show():
-    if is_human_card:
-        $"Front".visible = true
-        $"Back".visible = false
-        $"Description".visible = true
+    $"Front".visible = true
+    $"Back".visible = false
+    $"Description".visible = true
     
 func _on_Button_pressed():
-    var controller = $"../.."
-    if controller.get_path() == "/root/Game":
-        controller = $".."
-        controller.lock_cards = false
-    
-    if !is_played and !controller.lock_cards:
+    if !is_played:
+        var controller = $"../.."
         controller.play_card(self)
-        controller.lock_cards = true
-        
