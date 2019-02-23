@@ -14,7 +14,9 @@ var moving_type = ""
 var on_start_game = false
 var is_human_card = true
 
-
+# Called when the node enters the scene tree for the first time.
+func _ready():
+    pass
     
 func get_width():
     return get_node("Front").texture.get_width() * get_node("Front").scale.x
@@ -22,14 +24,6 @@ func get_width():
 func get_height():
     return get_node("Front").texture.get_height() * get_node("Front").scale.y
 
-func reset_variables():
-    is_played = false
-    deck_position = ""
-    move_to_position = ""
-    move_from_position = ""
-    moving_type = ""
-    on_start_game = false
-    
     
 func show():
     if is_human_card:
@@ -43,7 +37,7 @@ func _on_Button_pressed():
         controller = $".."
         controller.lock_cards = false
     
-    if !is_played and !controller.lock_cards and moving_type != "to_deck":
+    if !is_played and !controller.lock_cards:
         controller.play_card(self)
         controller.lock_cards = true
         

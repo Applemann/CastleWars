@@ -35,7 +35,6 @@ func _process(delta):
             if card.moving_type == "to_played":
                 add_card_into_played(card)
                 add_new_card_to_deck(card.move_from_position, false)
-                card.moving_type = ""
                 
                 #moving_cards.erase(card)
             if card.moving_type == "to_deck":
@@ -43,16 +42,12 @@ func _process(delta):
                 deck_cards.append(card)
                 card.position -= $"CardDeck".rect_position
                 $"CardDeck".add_child(card)
-                card.show()
-                card.moving_type = ""
-                card.position += Vector2(0.1, 0.1) 
                 
+                card.show()
                 if !card.on_start_game:
                     $"/root/Game/".change_player()
                     
             moving_cards.erase(card)
-       
-        
                 
 
 func play_card(card):
@@ -96,10 +91,11 @@ func add_card_into_played(card):
 
 func add_new_card_to_deck(card_position, on_start_game):
     
-    if all_cards.size() == 0:
+    if all_cards.size() == 1:
         while played_cards.size() > 1:
             var card2 = played_cards.pop_front()
-            card2.reset_variables()
+            card2.is_played = false
+            card2.on_start_game = false
             all_cards.append(card2)
             
     #randomize()
